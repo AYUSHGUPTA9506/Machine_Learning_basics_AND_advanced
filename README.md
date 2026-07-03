@@ -1,30 +1,10 @@
-# 🤖 Machine Learning Basics
-
-A hands-on collection of end-to-end machine learning projects covering real-world datasets — from raw data exploration to model-ready feature sets.
-
----
-
-## 📁 Repository Structure
-
-```
-Machine_Learning_basics/
-│
-├── ML_basics_insurance.ipynb   # Insurance charges prediction (regression)
-├── insurance.csv               # Medical insurance dataset (1,338 records)
-│
-├── ML_basics_heart.ipynb       # Heart disease prediction (classification)
-├── heart.csv                   # Heart disease dataset
-│
-└── README.md
-```
-
 ---
 
 ## 📓 Projects
 
-### 1. 💰 Insurance Charges Prediction
+### 1. 💰 Insurance Charges Prediction (Regression)
 
-**Notebook:** `ML_basics_insurance.ipynb`  
+**Notebooks:** `ML_basics_insurance.ipynb`, `ML_Insurance_updated.ipynb`
 **Dataset:** `insurance.csv`
 
 Predicts individual medical insurance charges using patient attributes like age, BMI, smoking status, and region.
@@ -45,7 +25,7 @@ Predicts individual medical insurance charges using patient attributes like age,
 
 #### Pipeline Walkthrough
 
-**Exploratory Data Analysis (EDA)**
+**EDA**
 - Distribution plots (histplot with KDE) for `age`, `bmi`, `children`, `charges`
 - Count plots for categorical features: `sex`, `smoker`, `children`
 - Box plots for outlier detection
@@ -69,14 +49,59 @@ Predicts individual medical insurance charges using patient attributes like age,
 - Chi-square test (`chi2_contingency`) for categorical features vs binned charges
 - Final selected features: `age`, `is_female`, `bmi`, `children`, `is_smoker`, `region_southeast`, `bmi_category_obese`
 
+**Modeling**
+- Trained a **Linear Regression** model on selected features
+- Evaluated using **R²** and **Adjusted R²** scores
+
 ---
 
-### 2. ❤️ Heart Disease Prediction
+### 2. ❤️ Heart Disease Prediction (Classification)
 
-**Notebook:** `ML_basics_heart.ipynb`  
+**Notebooks:** `ML_basics_heart.ipynb`, `ML_heart_disease.ipynb`
 **Dataset:** `heart.csv`
 
-Covers preprocessing and exploratory analysis for a heart disease classification task.
+Predicts presence of heart disease from clinical measurements.
+
+#### Pipeline Walkthrough
+
+**EDA**
+- Distribution plots for `Age`, `RestingBP`, `Cholesterol`, `MaxHR`
+- Count plots of `HeartDisease` vs `Sex`, `FastingBS`
+- Box plot (`Cholesterol` vs `HeartDisease`) and violin plot (`Age` vs `HeartDisease`)
+- Correlation heatmap across numeric features
+
+**Data Cleaning & Preprocessing**
+- Identified invalid zero values in `Cholesterol` and `RestingBP` (data entry anomalies) and imputed them with the mean of valid values
+- One-hot encoded all categorical columns (`pd.get_dummies`, drop_first=True)
+- Applied `StandardScaler` to `Age`, `RestingBP`, `Cholesterol`, `MaxHR`, `Oldpeak`
+
+**Modeling & Evaluation**
+- Trained and compared 5 classifiers: **Logistic Regression, KNN, Naive Bayes, Decision Tree, SVM (RBF kernel)**
+- Evaluated using Accuracy and F1-score (chosen for balanced precision/recall)
+- Best-performing model (**KNN**) serialized with `joblib` (`KNN_heart.pkl`, `scaler.pkl`, `columns.pkl`) for reuse/deployment
+
+---
+
+### 3. 🚢 Titanic Survival Prediction (Classification)
+
+**Notebook:** `tittanic_survival.ipynb`
+**Dataset:** Seaborn's built-in `titanic` dataset
+
+Predicts passenger survival based on demographic and travel details.
+
+#### Pipeline Walkthrough
+
+**Data Cleaning**
+- Dropped high-missing/redundant columns: `class`, `who`, `adult_male`, `deck`, `embark_town`, `alive`
+- Imputed missing `age` values with the column mean
+- Dropped rows with missing `embarked` values
+- Label encoded `sex` and `embarked`
+
+**Modeling & Evaluation**
+- Trained and compared 5 classifiers: **Logistic Regression, KNN, Naive Bayes, Decision Tree, SVM (linear kernel)**
+- Evaluated using Accuracy Score, Confusion Matrix, and Classification Report
+- Applied **Feature Scaling** (StandardScaler) for distance-based models (KNN, SVM)
+- Validated model robustness with **5-fold Cross-Validation**
 
 ---
 
@@ -87,9 +112,10 @@ Covers preprocessing and exploratory analysis for a heart disease classification
 | `pandas` | Data loading, cleaning, transformation |
 | `numpy` | Numerical operations |
 | `matplotlib` | Data visualization |
-| `seaborn` | Statistical plots (histplot, boxplot, heatmap, countplot) |
-| `scikit-learn` | StandardScaler, ML model preparation |
+| `seaborn` | Statistical plots (histplot, boxplot, heatmap, countplot, violinplot) |
+| `scikit-learn` | Preprocessing, model training, evaluation, cross-validation |
 | `scipy` | Pearson correlation, Chi-square feature selection |
+| `joblib` | Model & preprocessing object serialization |
 
 ---
 
@@ -105,32 +131,37 @@ cd Machine_Learning_basics
 ### 2. Install dependencies
 
 ```bash
-pip install pandas numpy matplotlib seaborn scikit-learn scipy
+pip install pandas numpy matplotlib seaborn scikit-learn scipy joblib
 ```
 
-### 3. Run the notebook
+### 3. Run the notebooks
 
 Open in Jupyter or VS Code:
 
 ```bash
-jupyter notebook ML_basics_insurance.ipynb
+jupyter notebook ML_Insurance_updated.ipynb
+jupyter notebook ML_heart_disease.ipynb
+jupyter notebook tittanic_survival.ipynb
 ```
 
-> **Note:** The notebook reads `insurance.csv` from the same folder. Make sure both files are in the same directory before running.
+> **Note:** `insurance.csv` and `heart.csv` must be in the same directory as their respective notebooks. `tittanic_survival.ipynb` loads its dataset directly via `seaborn.load_dataset("titanic")`.
 
 ---
 
 ## 📊 Key Insights
 
 - **Smoking** is the strongest predictor of insurance charges — smokers are charged significantly more
-- **BMI ≥ 30 (Obese)** is a key engineered feature that correlates strongly with high charges
-- **Age** shows a consistent positive correlation with charges
-- **Region** has relatively low predictive power compared to lifestyle factors
+- **BMI ≥ 30 (Obese)** is a key engineered feature that correlates strongly with high insurance charges
+- **Age** shows a consistent positive correlation with charges across both insurance and heart disease datasets
+- **Region** has relatively low predictive power for insurance charges compared to lifestyle factors
+- **Cholesterol = 0** and **RestingBP = 0** in the heart dataset were data entry errors, not true missing values — corrected via mean imputation
+- **KNN** performed best for heart disease classification among the tested models
+- For Titanic survival, **sex** and **passenger class** are among the strongest predictors; feature scaling notably improves KNN/SVM performance
 
 ---
 
 ## 👤 Author
 
-**Ayush Gupta**  
-Data Science & AI | ML · Deep Learning · Generative AI · MLOps  
+**Ayush Gupta**
+Data Science & AI | ML · Deep Learning · Generative AI · MLOps
 [GitHub](https://github.com/AYUSHGUPTA9506)
