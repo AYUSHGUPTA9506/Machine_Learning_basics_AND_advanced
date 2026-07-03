@@ -1,3 +1,27 @@
+# 🤖 Machine Learning Basics
+
+A hands-on collection of end-to-end machine learning projects covering real-world datasets — from raw data exploration to trained, evaluated models.
+
+---
+
+## 📁 Repository Structure
+
+```
+Machine_Learning_basics/
+│
+├── ML_basics_insurance.ipynb     # Insurance EDA & preprocessing (regression)
+├── ML_Insurance_updated.ipynb    # Insurance charges prediction w/ Linear Regression
+├── insurance.csv                 # Medical insurance dataset (1,338 records)
+│
+├── ML_basics_heart.ipynb         # Heart disease EDA & preprocessing (classification)
+├── ML_heart_disease.ipynb        # Heart disease prediction w/ multiple ML models
+├── heart.csv                     # Heart disease dataset
+│
+├── tittanic_survival.ipynb       # Titanic survival prediction (classification)
+│
+└── README.md
+```
+
 ---
 
 ## 📓 Projects
@@ -144,7 +168,7 @@ jupyter notebook ML_heart_disease.ipynb
 jupyter notebook tittanic_survival.ipynb
 ```
 
-> **Note:** `insurance.csv` and `heart.csv` must be in the same directory as their respective notebooks. `tittanic_survival.ipynb` loads its dataset directly via `seaborn.load_dataset("titanic")`.
+> **Note:** `insurance.csv` and `heart.csv` must be in the same directory as their respective notebooks. `tittanic_survival.ipynb` loads its dataset directly via `seaborn.load_dataset("titanic")`, so no CSV is required for that project.
 
 ---
 
