@@ -1,0 +1,13 @@
+* [33m4e3955b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Add ensemble learning, GridSearchCV, and Ford car price prediction projects
+[31m|[m * [33mea634ad[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Enhance README with project structure and notes
+[31m|[m * [33mf870f42[m Revise README with project updates and clarifications
+[31m|[m[31m/[m  
+* [33m377ba23[m feat: add heart disease & Titanic classifiers, extend insurance regression model
+* [33m7f774ae[m Revise README for machine learning project overview
+*   [33m7adecae[m Add insurance ML notebook and dataset
+[33m|[m[34m\[m  
+[33m|[m * [33m588cd68[m Revise README for Heart Disease Data Analysis project
+* [34m|[m [33md84db8b[m Add ML basics projects for heart disease and insurance prediction
+[34m|[m[34m/[m  
+* [33m629a7fb[m Completed heart disease preprocessing workflow
+* [33md7687c2[m Initial commit
